@@ -9,22 +9,26 @@
 ### 1. 登录 Spot 工作节点并检查中断信息
 
 
-通过 kube-ops-view 获取 Spot 类型工作节点组中某一个 Spot 实例的私有 IP, 在 AWS 服务控制台中的 EC2 服务中通过搜索 Spot 实例私有 IP 定位 Spot 实例, 最终获取其公网 DNS 地址.
+通过 kube-ops-view 获取 Spot 类型工作节点组中某一个 Spot 实例的私有 IP，在 AWS 服务控制台中的 EC2 服务中通过搜索 Spot 实例私有 IP 定位 Spot 实例，最终获取其公网 DNS 地址。
 
-![filterec2](../image/eks-spot/filterec2.png)
+![getnodeip](../image/eks-spot/getnodeip.jpg)
 
-通过 **创建 EKS 集群** 步骤中创建的SSH key, SSH 登录当前 Spot 实例. 示例命令如下：
+
+![filterec2](../image/eks-spot/filterec2.jpg)
+
+
+通过 **创建 EKS 集群** 步骤中创建的SSH key，SSH 登录当前 Spot 实例。示例命令如下：
 
 ```
-ssh ec2-user@ec2-3-112-109-131.ap-northeast-1.compute.amazonaws.com
+ssh ec2-user@ec2-44-234-45-74.us-west-2.compute.amazonaws.com
 ```
 
-![logonspot](../image/eks-spot/logonspot.png)
+![logonspot](../image/eks-spot/logonspot.jpg)
 
 检查 Spot 工作节点中断信息
 
 
-检查当前 Spot 工作节点的 metadata service 的中断信息。 我们可以看到, 在 AWS EC2 Spot 实例在没有被回收的情况下, 中断信息 URL 返回 404。
+检查当前 Spot 工作节点的 metadata service 的中断信息。 我们可以看到，在 AWS EC2 Spot 实例在没有被回收的情况下，中断信息 URL 返回 404。
 
 ```
 curl -i  http://169.254.169.254/latest/meta-data/spot/instance-action
@@ -33,44 +37,7 @@ curl -i  http://169.254.169.254/latest/meta-data/spot/instance-action
 ---
 ### 2. 部署 ec2-spot-termination-simulator
 
-进入Cloud9, 执行如下命令下载 ec2-spot-termination-simulator 对应的创建文件。
-
-```
-wget https://raw.githubusercontent.com/Shogan/ec2-spot-termination-simulator/master/simple-k8s-deployment.yaml
-```
-
-编辑 ec2-spot-termination-simulator 对应的创建文件, 增加如下部分 tolerations 和 affinity。这使得 ec2-spot-termination-simulator 只部署在当前 Spot 工作节点实例上。
-
-```
-    ...
-    spec:
-      tolerations: 
-      - key: "spotInstance" 
-        operator: "Equal" 
-        value: "true" 
-        effect: "PreferNoSchedule" 
-      affinity: 
-        nodeAffinity: 
-          preferredDuringSchedulingIgnoredDuringExecution: 
-          - weight: 1 
-            preference: 
-              matchExpressions: 
-              - key: lifecycle 
-                operator: In 
-                values: 
-                - Ec2Spot 
-          requiredDuringSchedulingIgnoredDuringExecution: 
-            nodeSelectorTerms: 
-            - matchExpressions: 
-              - key: intent 
-                operator: In 
-                values: 
-                - apps 
-      containers: 
-      ...
-```
-
-可以通过如下命令生成符合上述调度规范的 ec2-spot-termination-simulator 部署模板。
+在 Cloud9 终端环境中, 通过如下命令生成 ec2-spot-termination-simulator 部署模板，通过 tolerations 和 affinity 使得 ec2-spot-termination-simulator 只部署在当前 Spot 工作节点实例上。
 
 ```
 cat <<EoF > ~/environment/ec2-spot-termination-simulator.yml
@@ -158,7 +125,7 @@ kubectl apply -f ec2-spot-termination-simulator.yml
 
 在 kube-ops-view 验证 ec2-spot-termination-simulator 服务已经部署到集群中当前的 Spot 工作节点上。
 
-![ec2-spot-termination-simulator](../image/eks-spot/ec2-spot-termination-simulator.png)
+![ec2-spot-termination-simulator](../image/eks-spot/ec2-spot-termination-simulator.jpg)
 
 
 ---
@@ -180,6 +147,8 @@ sudo ifconfig lo:0 169.254.169.254 up
 sudo socat TCP4-LISTEN:80,fork TCP4:127.0.0.1:32752 >/dev/null 2>&1 &
 ```
 
-切换到 kube-ops-view 视图, 可以看到当前 Spot 工作节点上的 POD 被驱逐处于等待调度状态。这是因为当前 Spot 工作节点上的 aws-node-termination-handler 组件监听到  ec2-spot-termination-simulator 服务返回的模拟的实例收回信息, 从而通知 EKS 集群的控制平面进行对当前节点执行 cordon 和 drain 操作。 如下图所示：
+切换到 kube-ops-view 视图, 可以看到当前 Spot 工作节点上的 Pod 被驱逐处于等待调度状态。这是因为当前 Spot 工作节点上的 aws-node-termination-handler 组件监听到  ec2-spot-termination-simulator 服务返回的模拟的实例收回信息, 从而通知 EKS 集群的控制平面进行对当前节点执行 cordon 和 drain 操作。 如下图所示：
 
-![spoteviction](../image/eks-spot/spoteviction.png)
+![spoteviction](../image/eks-spot/spoteviction.jpg)
+
+随后可见被驱逐的 Pod 在另外一台 Spot 实例上被重新创建和运行起来。

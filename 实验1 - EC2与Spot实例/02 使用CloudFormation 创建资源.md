@@ -5,11 +5,11 @@
 1. 首先下载 CloudFormation 的模板文件，然后创建 Stack
 
 ```
-wget https://raw.githubusercontent.com/guoxun19/gcr-spot-workshop/master/resource/ec2-spot/ec2-spot-fleet-web-app.yaml
+wget https://raw.githubusercontent.com/nwcd-samples/gcr-spot-workshop/master/resource/ec2-spot/ec2-spot-fleet-web-app.yaml
 ```
 
 ```	
-aws cloudformation create-stack --stack-name ec2-spot-fleet-web-app --template-body file://ec2-spot-fleet-web-app.yaml --capabilities CAPABILITY_IAM --region us-east-1
+aws cloudformation create-stack --stack-name ec2-spot-fleet-web-app --template-body file://ec2-spot-fleet-web-app.yaml --capabilities CAPABILITY_IAM
 ```
 
 2. 查询 CloudFormation 当前创建结果
