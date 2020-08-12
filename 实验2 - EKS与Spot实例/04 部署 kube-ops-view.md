@@ -1,6 +1,4 @@
-## 部署 kube-ops-view
-
----
+# 部署 kube-ops-view
 
 [kube-ops-view](https://github.com/hjacobs/kube-ops-view) 对 EKS 集群中的系统资源运行状况提供了一个运维视图. 其主要提供了对 Kubernetes 集群中的工作节点以及工作节点之上的 Pod 运行状态提供了信息监控和视图展现。
 

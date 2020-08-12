@@ -1,6 +1,4 @@
-## 创建和配置 Spot 工作节点组
-
----
+# 创建和配置 Spot 工作节点组
 
 EC2 Spot 的资源状态可以通过 [Spot Instance Advisor](https://aws.amazon.com/ec2/spot/instance-advisor/) 获取. 通过 Cluster Autoscaler 对  Spot 工作节点组对应的ASG进行资源弹性管理.  Spot 工作节点组中的 EC2 实例类型必须具备相同的 CPU:MEM 配置. 可以通过两种方式实现: 每个 Spot 工作节点组中配置一种 EC2 实例类型; 或者每个 Spot 工作节点组中配置不同的 EC2 实例类型但是具有同样的 CPU:MEM 的配置.
 

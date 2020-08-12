@@ -1,6 +1,4 @@
-## 安装 Helm
-
----
+# 安装 Helm
 
 执行如下安装命令. 
 (注意不要执行 'helm init'. 如果不小心执行, 可以通过执行 'helm reset –force' 进行restore.)

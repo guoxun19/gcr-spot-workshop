@@ -1,7 +1,6 @@
 
-## AWS GCR Spot Workshop
+# AWS GCR Spot Workshop
 
----
 
 Amazon EC2 Spot 实例让您可以利用 AWS 云中未使用的 EC2 容量。与按需实例的价格相比，使用 Spot 实例最高可以享受 90% 的折扣。
 
@@ -15,7 +14,7 @@ Amazon EC2 Spot 实例让您可以利用 AWS 云中未使用的 EC2 容量。与
 
 
 ---
-### Spot 实例的特色
+## Spot 实例的特色
 
 **1. 可预测的低价格**
 
@@ -30,14 +29,13 @@ Spot 实例可以为您提供 AWS 大规模运行的优势。您可以在运行�
 通过 EC2 Auto Scaling 和 ECS 等 AWS 服务或者 Terraform 和 Jenkins 等集成的第三方工具，您可以轻松启动、扩展和管理 Spot 实例。
 
 ---
-
-### Spot 实例运作模式
+## Spot 实例运作模式
 
 ![spot](./image/spot-diagram.png)
 
 
 ---
-### Spot 实例适用场景
+## Spot 实例适用场景
 
 **1. 大数据和分析**
 

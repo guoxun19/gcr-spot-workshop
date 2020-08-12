@@ -1,14 +1,12 @@
-## 模拟 Spot 实例中断
+# 模拟 Spot 实例中断
 
----
 
-### 部署 ec2-spot-termination-simulator
+## 部署 ec2-spot-termination-simulator
 
 [ec2-spot-termination-simulator](https://github.com/Shogan/ec2-spot-termination-simulator) 提供了对 EC2 metadata service 的模拟能力。这使得用户在 Spot 实例不被真实发生回收的情况下，模拟测试 Spot 实例中断对客户应用的影响。同时，也可以对 EC2 metadata service 中的中断信号有依赖的系统服务进行模拟测试, 比如 aws-node-termination-handler 组件，验证其是否可以很好的处理中断事件。
 
 ---
-
-#### 登录 Spot 工作节点并检查中断信息
+### 1. 登录 Spot 工作节点并检查中断信息
 
 
 通过 kube-ops-view 获取 Spot 类型工作节点组中某一个 Spot 实例的私有 IP, 在 AWS 服务控制台中的 EC2 服务中通过搜索 Spot 实例私有 IP 定位 Spot 实例, 最终获取其公网 DNS 地址.
@@ -33,8 +31,7 @@ curl -i  http://169.254.169.254/latest/meta-data/spot/instance-action
 ```
 
 ---
-
-#### 部署 ec2-spot-termination-simulator
+### 2. 部署 ec2-spot-termination-simulator
 
 进入Cloud9, 执行如下命令下载 ec2-spot-termination-simulator 对应的创建文件。
 
@@ -165,8 +162,7 @@ kubectl apply -f ec2-spot-termination-simulator.yml
 
 
 ---
-
-#### 更改 Spot 工作节点网络配置以模拟中断信号
+### 3. 更改 Spot 工作节点网络配置以模拟中断信号
 
 
 在Cloud9中, 执行如下命令获取 ec2-spot-termination-simulator 服务对应的 NodePort 信息, 例如 32752 并记录。

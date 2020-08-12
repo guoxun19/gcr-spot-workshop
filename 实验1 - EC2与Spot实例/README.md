@@ -1,8 +1,4 @@
-
-
-## 实验1：EC2 与 Spot 实例
-
----
+# 实验1：EC2 与 Spot 实例
 
 本实验通过部署一个 Web 网站，演示如何使用 EC2 Spot Fleet 进行 Spot 实例的申请，业务的部署。以及使用 Auto Scaling 结合 ALB进 行业务动态扩缩容。
 

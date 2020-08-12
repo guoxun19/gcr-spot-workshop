@@ -1,4 +1,4 @@
-## 创建 Cloud9 环境
+# 创建 Cloud9 环境
 
 
 使用 AWS 用户登录: [https://us-west-2.console.aws.amazon.com/cloud9/home?region=us-west-2](https://us-west-2.console.aws.amazon.com/cloud9/home?region=us-west-2). 

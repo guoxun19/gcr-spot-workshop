@@ -1,6 +1,4 @@
-## 创建 EC2 Fleet
-
----
+# 创建 EC2 Fleet
 
 在这一部分，我们会启动一个 EC2 Spot Fleet ，并且将使 Spot 实例自动地与之前创建的负载均衡相关联。
 

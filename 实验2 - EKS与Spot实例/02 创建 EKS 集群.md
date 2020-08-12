@@ -1,10 +1,9 @@
-## 创建 EKS 集群
-
----
+# 创建 EKS 集群
 
 在创建 EKS 集群之前，我们还需要安装 eksctl 和 kubectl 工具。
 
-### 安装 kubectl
+---
+## 安装 kubectl
 
 ```
 export KUBECTL_VERSION=v1.15.10
@@ -18,7 +17,8 @@ sudo chmod +x /usr/local/bin/kubectl
 kubectl version
 ```
 
-### 安装 eksctl
+---
+## 安装 eksctl
 
 ##### [eksctl](https://eksctl.io/) 是 Amazon EKS 的官方管理工具, Go 语言实现, 底层通过 CloudFormation 对 AWS 资源进行管理。
 
@@ -36,7 +36,8 @@ sudo mv -v /tmp/eksctl /usr/local/bin
 eksctl version
 ```
 
-### 生成 SSH KEY
+---
+## 生成 SSH KEY
 
 通过 ssh-keygen 命令生成 ssh key. 新生成的 ssh key 用于后续登录 EKS 的工作节点(连续点击三次回车键接受默认生成配置):
 
@@ -50,7 +51,8 @@ ssh-keygen
 aws ec2 import-key-pair --key-name "eks-spot-key" --public-key-material fileb://~/.ssh/id_rsa.pub
 ```
 
-### 通过 eksctl 创建 EKS 集群
+---
+## 通过 eksctl 创建 EKS 集群
 
 下面的命令会创建一个名字为 eks-spot-eksctl 的 EKS 集群, 同时会创建一个托管的工作节点组, 里面包含两个 on-demand 类型的 EC2 实例类型. 同时, 新的 VPC 会在这个过程中创建, 里面会包含 3个 公共子网和 3 个私有子网. 工作节点组中的工作节点会位于新创建的 VPC 的私有子网中.
 

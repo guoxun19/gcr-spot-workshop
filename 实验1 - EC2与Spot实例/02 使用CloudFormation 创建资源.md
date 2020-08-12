@@ -1,6 +1,4 @@
-## 使用 CloudFormation 创建资源
-
----
+# 使用 CloudFormation 创建资源
 
 为了节省实验环境的初始化过程，我们使用 CloudFormation 模板去创建 应用负载均衡器 ALB， VPC 和两个在不同可用区的子网，安全组，以及实验所需要的 IAM policy 和 Role。
 

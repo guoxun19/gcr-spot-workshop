@@ -1,6 +1,4 @@
-## 为 Spot Fleet 配置 Auto Scaling
-
----
+# 为 Spot Fleet 配置 Auto Scaling
 
 下面，我们将为 Spot Fleet 配置 Auto Scaling。他将基于 ALB 负载均衡器的请求数量，自动进行扩缩容。
 
